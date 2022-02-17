@@ -2,9 +2,6 @@
 # console-game-palace-mobile-web
 单机小助 移动端H5
 
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
