@@ -166,6 +166,7 @@ const Recommend = (props) => {
             <List header=''>
                 {users.map(user => (
                     <List.Item
+                        onClick={() => navigator('/recommendDetail')}
                         key={user.id}
                         prefix={
                             <Image

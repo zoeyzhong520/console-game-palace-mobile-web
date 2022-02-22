@@ -1,10 +1,18 @@
+import { Provider } from 'react-redux'
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { Provider } from 'react-redux'
 import store from './store/store'
+import Bmob from 'hydrogen-js-sdk'
+
+// 初始化Bmob
+Bmob.initialize('df3cba52942cb8b9', 'kn03PK')
+// 调试模式
+Bmob.debug(true)
+// 将Bmob挂载到原型中
+React.$bmob = Bmob
 
 ReactDOM.render(
   <Provider store={store}>

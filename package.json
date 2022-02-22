@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "antd-mobile": "^5.0.0-rc.27",
     "customize-cra": "^1.0.0",
+    "hydrogen-js-sdk": "^2.3.0",
     "lib-flexible": "^0.3.2",
     "node-sass": "^7.0.1",
     "postcss-px2rem-exclude": "0.0.6",

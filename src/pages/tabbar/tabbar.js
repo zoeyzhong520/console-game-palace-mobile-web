@@ -4,6 +4,7 @@ import { AppOutline, UnorderedListOutline, UserOutline, } from 'antd-mobile-icon
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
+import { cgp_recommend_banner_list } from '../../common/common'
 import * as actionTypes from '../../store/actionTypes'
 import Recommend from '../recommend/recommend'
 import RecommendSearch from '../recommend/recommendSearch/recommendSearch'
@@ -15,49 +16,62 @@ import ProfileClub from '../profile/profileClub/profileClub'
 import ProfileAbout from '../profile/profileAbout/profileAbout';
 import ProfileRank from '../profile/profileRank/profileRank'
 
-const CGPTabBar = (props) => {  
-    // 标签栏
-const Bottom = () => {    
-    const navigate = useNavigate()
+const CGPTabBar = (props) => {
+    const [dataSource, setDataSource] = useState({})
+    useEffect(() => {
+        console.log(JSON.stringify(dataSource));
+        getBanner()
+    }, [dataSource])
 
-    const tabs = [
-        {
-            key: '/',
-            title: '游戏推荐',
-            icon: <AppOutline />,
-        },
-        {
-            key: '/article',
-            title: '热门文章',
-            icon: <UnorderedListOutline />,
-        },
-        {
-            key: '/profile',
-            title: '戳我',
-            icon: <UserOutline />,
-        },
-    ]
-
-    // 点击TabBar
-    const tabBarClick = (e) => {
-        // 更新redux
-        // props.dispatch({
-        //     type: actionTypes.ADD_TABBARSHOWFLAG,
-        //     tabBarShowFlag: e === '/' || e === '/article' || e === '/profile'
-        // })
-        navigate(e)
+    // Banner
+    const getBanner = () => {
+        cgp_recommend_banner_list().then(res => {
+            console.log(JSON.stringify(res))
+        })
     }
 
-    return (
-        <TabBar
-            style={{display: props.tabBarShowFlag ? 'block' : 'none'}}
-            onChange={(e) => tabBarClick(e)}>
-            {tabs.map(item => (
-                <TabBar.Item key={item.key} icon={item.icon} title={item.title} />
-            ))}
-        </TabBar>
-    )
-}
+    // 标签栏
+    const Bottom = () => {
+        const navigate = useNavigate()
+
+        const tabs = [
+            {
+                key: '/',
+                title: '游戏推荐',
+                icon: <AppOutline />,
+            },
+            {
+                key: '/article',
+                title: '热门文章',
+                icon: <UnorderedListOutline />,
+            },
+            {
+                key: '/profile',
+                title: '戳我',
+                icon: <UserOutline />,
+            },
+        ]
+
+        // 点击TabBar
+        const tabBarClick = (e) => {
+            // 更新redux
+            // props.dispatch({
+            //     type: actionTypes.ADD_TABBARSHOWFLAG,
+            //     tabBarShowFlag: e === '/' || e === '/article' || e === '/profile'
+            // })
+            navigate(e)
+        }
+
+        return (
+            <TabBar
+                style={{ display: props.tabBarShowFlag ? 'block' : 'none' }}
+                onChange={(e) => tabBarClick(e)}>
+                {tabs.map(item => (
+                    <TabBar.Item key={item.key} icon={item.icon} title={item.title} />
+                ))}
+            </TabBar>
+        )
+    }
 
     return (
         <Router initialEntries={['/']}>

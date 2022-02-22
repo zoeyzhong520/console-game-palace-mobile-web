@@ -1,8 +1,8 @@
 import './profileRank.scss'
 import { NavBar, List, Image } from 'antd-mobile'
 import { connect } from 'react-redux'
-import * as actionTypes from '../../../store/actionTypes'
 import { useNavigate } from 'react-router-dom'
+import * as actionTypes from '../../../store/actionTypes'
 
 const ProfileRank = (props) => {
     const navigator = useNavigate()
