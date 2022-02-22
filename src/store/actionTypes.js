@@ -1,0 +1,1 @@
+export const ADD_TABBARSHOWFLAG = 'ADD_TABBARSHOWFLAG'  // TabBar显示、隐藏flag

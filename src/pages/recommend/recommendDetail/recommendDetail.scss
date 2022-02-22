@@ -1,0 +1,25 @@
+@import '../../../assets/theme.scss';
+
+.recommend-detail-page {
+    width: 100vw;
+    
+    
+}
+
+.recommend-detail-page-section {
+    display: flex;
+    align-items: center;
+
+    &-l {
+        margin: 0 5px 0 0;
+        display: inline-block;
+        width: 2px;
+        height: 10px;
+        background: $primaryColor;
+    }
+
+    span {
+        line-height: 10px;
+        color: $primaryColor;
+    }
+}
