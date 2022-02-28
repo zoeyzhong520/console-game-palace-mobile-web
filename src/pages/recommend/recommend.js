@@ -1,23 +1,41 @@
 import './recommend.scss'
 import { useEffect, useState } from 'react'
 import { tabs } from './recommendService'
-import { SearchBar, Tabs, Swiper, List, Image, Toast } from 'antd-mobile'
+import { SearchBar, Tabs, Swiper, List, Image, Toast, Button } from 'antd-mobile'
 import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux'
+import { cgp_recommend_banner_list, leaderboards_query_list } from '../../common/common'
 import * as actionTypes from '../../store/actionTypes'
 
 const Recommend = (props) => {
     const navigator = useNavigate()
+    const [banner, setBanner] = useState([''])
+    useEffect(() => {
+        // Http请求
+        getBanner()
+        getRecList()
+    }, [])
+
+    var page = 1 // 分页
+    const [recListType, setRecListType] = useState('ALL')
+    const [recList, setRecList] = useState([])
 
     // RecommendTabs
     const RecommendTabs = () => {
+        // 点击Tab
+        const tabClick = (e) => {
+            Toast.show(`你点击了 ${e}`)
+            // Http请求
+            // getRecList()
+        }
+
         return (
             <Tabs
                 activeLineMode='fixed'
                 style={{
                     '--fixed-active-line-width': '20px',
                 }}
-                onChange={(e) => Toast.show(`你点击了 ${e}`)}>
+                onChange={(e) => tabClick(e)}>
                 <Tabs.Tab title='游戏推荐' key='ALL' />
                 <Tabs.Tab title='动作游戏' key='A' />
                 <Tabs.Tab title='射击游戏' key='B' />
@@ -42,7 +60,6 @@ const Recommend = (props) => {
     }
 
     // RecommendSwiper
-    const colors = ['#ace0ff', '#bcffbd', '#e4fabd', '#ffcfac']
     const RecommendSwiper = () => {
         // 点击Swiper的Item
         const swiperItemClick = () => {
@@ -53,18 +70,17 @@ const Recommend = (props) => {
             navigator('/recommendDetail')
         }
 
-        const items = colors.map((color, index) => (
+        const items = banner.map((item, index) => (
             <Swiper.Item
                 onClick={() => swiperItemClick()}
                 key={index}>
                 <div
                     className='recommend-page-swiper-content'
-                    style={{ background: color }}
                     onClick={() => {
                         Toast.show(`你点击了卡片 ${index + 1}`)
                     }}
                 >
-                    {index + 1}
+                    <Image src={item.image} lazy />
                 </div>
             </Swiper.Item>
         ))
@@ -75,111 +91,27 @@ const Recommend = (props) => {
     }
 
     // RecommendList
-    const users = [
-        {
-            avatar:
-                'https://images.unsplash.com/photo-1548532928-b34e3be62fc6?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-            name: 'Novalee Spicer',
-            description: 'Deserunt dolor ea eaque eos',
-            id: 'dsdsa'
-        },
-        {
-            avatar:
-                'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9',
-            name: 'Sara Koivisto',
-            description: 'Animi eius expedita, explicabo',
-            id: 'sadsad'
-        },
-        {
-            avatar:
-                'https://images.unsplash.com/photo-1542624937-8d1e9f53c1b9?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-            name: 'Marco Gregg',
-            description: 'Ab animi cumque eveniet ex harum nam odio omnis',
-            id: 'dasasf'
-        },
-        {
-            avatar:
-                'https://images.unsplash.com/photo-1546967191-fdfb13ed6b1e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-            name: 'Edith Koenig',
-            description: 'Commodi earum exercitationem id numquam vitae',
-            id: 'ewrwe'
-        },
-        {
-            avatar:
-                'https://images.unsplash.com/photo-1548532928-b34e3be62fc6?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-            name: 'Novalee Spicer',
-            description: 'Deserunt dolor ea eaque eos',
-            id: 'xcdsc'
-        },
-        {
-            avatar:
-                'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9',
-            name: 'Sara Koivisto',
-            description: 'Animi eius expedita, explicabo',
-            id: 'hghgf'
-        },
-        {
-            avatar:
-                'https://images.unsplash.com/photo-1542624937-8d1e9f53c1b9?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-            name: 'Marco Gregg',
-            description: 'Ab animi cumque eveniet ex harum nam odio omnis',
-            id: 'iuijk'
-        },
-        {
-            avatar:
-                'https://images.unsplash.com/photo-1546967191-fdfb13ed6b1e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-            name: 'Edith Koenig',
-            description: 'Commodi earum exercitationem id numquam vitae',
-            id: 'pkolkmlk'
-        },
-        {
-            avatar:
-                'https://images.unsplash.com/photo-1548532928-b34e3be62fc6?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-            name: 'Novalee Spicer',
-            description: 'Deserunt dolor ea eaque eos',
-            id: 'ererwq'
-        },
-        {
-            avatar:
-                'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9',
-            name: 'Sara Koivisto',
-            description: 'Animi eius expedita, explicabo',
-            id: 'qwqw'
-        },
-        {
-            avatar:
-                'https://images.unsplash.com/photo-1542624937-8d1e9f53c1b9?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-            name: 'Marco Gregg',
-            description: 'Ab animi cumque eveniet ex harum nam odio omnis',
-            id: 'csdvsfdvs'
-        },
-        {
-            avatar:
-                'https://images.unsplash.com/photo-1546967191-fdfb13ed6b1e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-            name: 'Edith Koenig',
-            description: 'Commodi earum exercitationem id numquam vitae',
-            id: 'sadasd'
-        },
-    ]
     const RecommendList = () => {
         return (
-            <List header=''>
-                {users.map(user => (
+            <List>
+                {recList.map((item, index) => (
                     <List.Item
                         onClick={() => navigator('/recommendDetail')}
-                        key={user.id}
+                        key={item.objectId}
+                        arrow={false}
                         prefix={
-                            <Image
-                                src={user.avatar}
-                                style={{ borderRadius: 20 }}
-                                fit='cover'
-                                width={40}
-                                height={40}
-                            />
+                            <Image className='recommend-page-list-prefix' src={item.image} width={100} height={140} fit='contain' lazy />
                         }
-                        description={user.description}
+                        title={
+                            <p className='recommend-page-list-title'>{item.title}</p>
+                        }
+                        children={
+                            <p className='recommend-page-list-children'>{item.description}</p>
+                        }
+                        description={
+                            <p className='recommend-page-list-desc'>阅读全文</p>
+                        }
                     >
-                        {user.name}
                     </List.Item>
                 ))}
             </List>
@@ -192,6 +124,30 @@ const Recommend = (props) => {
             tabBarShowFlag: false
         })
         navigator('/recommendSearch')
+    }
+
+    // Http请求
+    const getBanner = () => {
+        if (props.banner.length > 0) {
+            setBanner(props.banner)
+            return
+        }
+        cgp_recommend_banner_list().then(list => {
+            setBanner(list)
+            props.dispatch({
+                type: actionTypes.ADD_BANNER,
+                banner: list
+            })
+        })
+    }
+
+    const getRecList = () => {
+        if (props.recListType.length > 0) {
+            setRecListType(props.recListType) // redux有管理的状态，就取出来
+        }
+        leaderboards_query_list(recListType, page).then(list => {
+            setRecList(list)
+        })
     }
 
     return (
@@ -217,7 +173,9 @@ const Recommend = (props) => {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        tabBarShowFlag: state.tabBarShowFlag
+        tabBarShowFlag: state.tabBarShowFlag,
+        banner: state.banner,
+        recListType: state.recListType
     }
 }
 

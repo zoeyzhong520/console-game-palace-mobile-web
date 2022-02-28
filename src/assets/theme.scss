@@ -4,3 +4,38 @@ $primaryColor: #2979ff;
 $borderColor: #ebebeb;
 // 白色
 $whiteColor: #fff;
+// 灰色
+$grayColor: #f5f6f7;
+// #333333
+$textColor3: #333333;
+// #666666
+$textColor6: #666666;
+// #999999
+$textColor9: #999999;
+
+// font-size-title
+$fontSizeTitle: 15px;
+// font-size-content
+$fontSizeContent: 11px;
+
+@mixin lineClamp2 {
+    -webkit-line-clamp: 2;
+}
+
+@mixin lineClamp3 {
+    -webkit-line-clamp: 3;
+}
+
+// 单行文本溢出用省略号显示
+.ingleTextEllipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+// 多行文本溢出用省略号显示
+.multipleTextEllipsis {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

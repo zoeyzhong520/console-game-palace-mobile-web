@@ -17,4 +17,30 @@
             user-select: none;
         }
     }
+
+    &-list {
+        &-prefix {
+            background: $grayColor;
+        }
+
+        &-title {
+            @extend .multipleTextEllipsis;
+            @include lineClamp2;
+            font-size: $fontSizeTitle;
+            color: $textColor3;
+        }
+
+        &-children {
+            @extend .multipleTextEllipsis;
+            @include lineClamp2;
+            font-size: $fontSizeContent;
+            color: $textColor6;
+        }
+
+        &-desc {
+            text-decoration: underline;
+            font-size: $fontSizeContent;
+            color: $primaryColor;
+        }
+    }
 }

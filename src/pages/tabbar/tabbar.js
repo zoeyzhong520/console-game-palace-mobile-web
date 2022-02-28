@@ -4,7 +4,6 @@ import { AppOutline, UnorderedListOutline, UserOutline, } from 'antd-mobile-icon
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { cgp_recommend_banner_list } from '../../common/common'
 import * as actionTypes from '../../store/actionTypes'
 import Recommend from '../recommend/recommend'
 import RecommendSearch from '../recommend/recommendSearch/recommendSearch'
@@ -17,19 +16,7 @@ import ProfileAbout from '../profile/profileAbout/profileAbout';
 import ProfileRank from '../profile/profileRank/profileRank'
 
 const CGPTabBar = (props) => {
-    const [dataSource, setDataSource] = useState({})
-    useEffect(() => {
-        console.log(JSON.stringify(dataSource));
-        getBanner()
-    }, [dataSource])
-
-    // Banner
-    const getBanner = () => {
-        cgp_recommend_banner_list().then(res => {
-            console.log(JSON.stringify(res))
-        })
-    }
-
+   
     // 标签栏
     const Bottom = () => {
         const navigate = useNavigate()
