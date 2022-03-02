@@ -1,2 +1,10 @@
 @import '../../assets/theme.scss';
 
+.article-page {
+    &-title {
+        @extend .multipleTextEllipsis;
+        @include lineClamp2;
+        font-size: $fontSizeTitle;
+        color: $textColor3;
+    }
+}

@@ -9,28 +9,37 @@ import * as actionTypes from '../../store/actionTypes'
 
 const Recommend = (props) => {
     const navigator = useNavigate()
+
+    var page = 1 // 分页
+
+    const [recListType, setRecListType] = useState('ALL')
+    useEffect(() => {
+        let _recListType = 'ALL'
+        if (props.recListType.length > 0) {
+            _recListType = props.recListType // redux有管理的状态，就取出来 
+        }
+        getRecList(_recListType)
+    }, [])
+
+    const [recList, setRecList] = useState([])
+
     const [banner, setBanner] = useState([''])
     useEffect(() => {
         // Http请求
         getBanner()
-        getRecList()
     }, [])
-
-    var page = 1 // 分页
-    const [recListType, setRecListType] = useState('ALL')
-    const [recList, setRecList] = useState([])
 
     // RecommendTabs
     const RecommendTabs = () => {
         // 点击Tab
         const tabClick = (e) => {
-            Toast.show(`你点击了 ${e}`)
             // Http请求
-            // getRecList()
+            getRecList(e)
         }
 
         return (
             <Tabs
+                activeKey={recListType}
                 activeLineMode='fixed'
                 style={{
                     '--fixed-active-line-width': '20px',
@@ -132,7 +141,12 @@ const Recommend = (props) => {
             setBanner(props.banner)
             return
         }
+        Toast.show({
+            icon: 'loading',
+            content: '加载中...'
+        })
         cgp_recommend_banner_list().then(list => {
+            Toast.clear()
             setBanner(list)
             props.dispatch({
                 type: actionTypes.ADD_BANNER,
@@ -141,12 +155,19 @@ const Recommend = (props) => {
         })
     }
 
-    const getRecList = () => {
-        if (props.recListType.length > 0) {
-            setRecListType(props.recListType) // redux有管理的状态，就取出来
-        }
+    const getRecList = (recListType) => {
+        Toast.show({
+            icon: 'loading',
+            content: '加载中...'
+        })
         leaderboards_query_list(recListType, page).then(list => {
+            Toast.clear()
             setRecList(list)
+            setRecListType(recListType)
+            props.dispatch({
+                type: actionTypes.ADD_RECLISTTYPE,
+                recListType: recListType
+            })
         })
     }
 

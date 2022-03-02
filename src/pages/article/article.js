@@ -1,97 +1,21 @@
 import './article.scss'
-import { List, Image } from 'antd-mobile'
+import { List, Image, Toast } from 'antd-mobile'
 import { useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { cgp_popular_articles_list } from '../../common/common'
 import * as actionTypes from '../../store/actionTypes'
 
 const Article = (props) => {
+    var page = 1 // 页码
+
+    const [articleList, setArticleList] = useState([])
+    useEffect(() => {
+        // Http请求
+        getArticles()
+    }, [])
+
     // ArticleList
-    const users = [
-        {
-            avatar:
-                'https://images.unsplash.com/photo-1548532928-b34e3be62fc6?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-            name: 'Novalee Spicer',
-            description: 'Deserunt dolor ea eaque eos',
-            id: 'dsdsa'
-        },
-        {
-            avatar:
-                'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9',
-            name: 'Sara Koivisto',
-            description: 'Animi eius expedita, explicabo',
-            id: 'sadsad'
-        },
-        {
-            avatar:
-                'https://images.unsplash.com/photo-1542624937-8d1e9f53c1b9?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-            name: 'Marco Gregg',
-            description: 'Ab animi cumque eveniet ex harum nam odio omnis',
-            id: 'dasasf'
-        },
-        {
-            avatar:
-                'https://images.unsplash.com/photo-1546967191-fdfb13ed6b1e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-            name: 'Edith Koenig',
-            description: 'Commodi earum exercitationem id numquam vitae',
-            id: 'ewrwe'
-        },
-        {
-            avatar:
-                'https://images.unsplash.com/photo-1548532928-b34e3be62fc6?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-            name: 'Novalee Spicer',
-            description: 'Deserunt dolor ea eaque eos',
-            id: 'xcdsc'
-        },
-        {
-            avatar:
-                'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9',
-            name: 'Sara Koivisto',
-            description: 'Animi eius expedita, explicabo',
-            id: 'hghgf'
-        },
-        {
-            avatar:
-                'https://images.unsplash.com/photo-1542624937-8d1e9f53c1b9?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-            name: 'Marco Gregg',
-            description: 'Ab animi cumque eveniet ex harum nam odio omnis',
-            id: 'iuijk'
-        },
-        {
-            avatar:
-                'https://images.unsplash.com/photo-1546967191-fdfb13ed6b1e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-            name: 'Edith Koenig',
-            description: 'Commodi earum exercitationem id numquam vitae',
-            id: 'pkolkmlk'
-        },
-        {
-            avatar:
-                'https://images.unsplash.com/photo-1548532928-b34e3be62fc6?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-            name: 'Novalee Spicer',
-            description: 'Deserunt dolor ea eaque eos',
-            id: 'ererwq'
-        },
-        {
-            avatar:
-                'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9',
-            name: 'Sara Koivisto',
-            description: 'Animi eius expedita, explicabo',
-            id: 'qwqw'
-        },
-        {
-            avatar:
-                'https://images.unsplash.com/photo-1542624937-8d1e9f53c1b9?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-            name: 'Marco Gregg',
-            description: 'Ab animi cumque eveniet ex harum nam odio omnis',
-            id: 'csdvsfdvs'
-        },
-        {
-            avatar:
-                'https://images.unsplash.com/photo-1546967191-fdfb13ed6b1e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-            name: 'Edith Koenig',
-            description: 'Commodi earum exercitationem id numquam vitae',
-            id: 'sadasd'
-        },
-    ]
     const ArticleList = () => {
         const navigator = useNavigate()
 
@@ -105,27 +29,35 @@ const Article = (props) => {
         }
 
         return (
-            <List header=''>
-                {users.map(user => (
+            <List mode='card'>
+                {articleList.map((item, index) => (
                     <List.Item
+                        arrow={false}
                         onClick={(e) => articleClick(e)}
-                        key={user.id}
-                        prefix={
-                            <Image
-                                src={user.avatar}
-                                style={{ borderRadius: 20 }}
-                                fit='cover'
-                                width={40}
-                                height={40}
-                            />
+                        key={item.objectId}
+                        children={
+                            <Image src={item.image} width={335} height={190} fit='cover' lazy />
                         }
-                        description={user.description}
+                        description={
+                            <p className='article-page-title'>{item.title}</p>
+                        }
                     >
-                        {user.name}
                     </List.Item>
                 ))}
             </List>
         )
+    }
+
+    // Http请求
+    const getArticles = () => {
+        Toast.show({
+            icon: 'loading',
+            content: '加载中...'
+        })
+        cgp_popular_articles_list(page).then(list => {
+            Toast.clear()
+            setArticleList(list)
+        })
     }
 
     return (

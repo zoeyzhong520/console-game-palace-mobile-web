@@ -19,7 +19,8 @@ const reducer = (state = defaultState, action) => {
                 ...state,
                 banner: action.banner
             }
-        case actionTypes.ADD_TABBARSHOWFLAG:
+        case actionTypes.ADD_RECLISTTYPE:
+            console.log(JSON.stringify(action));
             return {
                 ...state,
                 recListType: action.recListType
