@@ -7,7 +7,7 @@ import { cgp_popular_articles_list } from '../../common/common'
 import * as actionTypes from '../../store/actionTypes'
 
 const Article = (props) => {
-    var page = 1 // 页码
+    var page = 0 // 页码
 
     const [articleList, setArticleList] = useState([])
     useEffect(() => {
@@ -17,15 +17,15 @@ const Article = (props) => {
 
     // ArticleList
     const ArticleList = () => {
-        const navigator = useNavigate()
+        const navigate = useNavigate()
 
         // 点击文章
-        const articleClick = (e) => {
+        const articleClick = (e, item) => {
             // props.dispatch({
             //     type: actionTypes.ADD_TABBARSHOWFLAG,
             //     tabBarShowFlag: false
             // })
-            navigator('/articleDetail')
+            navigate('/articleDetail', { state: { datas: item.objectId}})
         }
 
         return (
@@ -33,7 +33,7 @@ const Article = (props) => {
                 {articleList.map((item, index) => (
                     <List.Item
                         arrow={false}
-                        onClick={(e) => articleClick(e)}
+                        onClick={(e) => articleClick(e, item)}
                         key={item.objectId}
                         children={
                             <Image src={item.image} width={335} height={190} fit='cover' lazy />

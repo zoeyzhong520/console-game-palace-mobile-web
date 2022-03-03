@@ -120,15 +120,15 @@ export const handleOnScroll = () => {
  * @param  {String} keyWord  查询的关键词
  * @return {Array}           查询的结果
  */
- export const fuzzyQuery = function(list, keyWord) {
-	var reg = new RegExp(keyWord);
-	var arr = [];
-	for (var i = 0; i < list.length; i++) {
-		if (reg.test(list[i].title)) {
-			arr.push(list[i]);
-		}
-	}
-	return arr;
+export const fuzzyQuery = function (list, keyWord) {
+    var reg = new RegExp(keyWord);
+    var arr = [];
+    for (var i = 0; i < list.length; i++) {
+        if (reg.test(list[i].title)) {
+            arr.push(list[i]);
+        }
+    }
+    return arr;
 }
 
 /*以下为API*/
@@ -176,11 +176,10 @@ export const cgp_recommend_all_list = function (page) {
     })
 }
 
-/*
-热门文章列表数据
-page 页码
-limit 每页的内容个数
-*/ 
+/**
+ * @param {Number} page 页码
+ * @param {Number} limit 每页的内容个数
+*/
 export const cgp_popular_articles_list = function (page, limit) {
     return new Promise((resolve, reject) => {
 
@@ -200,17 +199,22 @@ export const cgp_popular_articles_list = function (page, limit) {
 /**
  * 根据 tabs 标签查询数据
  * @param  {String} type     类型
+ * @param {Boolean} isOrder  是否查看排序
  * @return {Array}           查询的结果
  */
-export const leaderboards_query_list = function (type, page) {
+export const leaderboards_query_list = function (type, page, isOrder = false) {
     return new Promise((resolve, reject) => {
 
         const query = React.$bmob.Query('CGP_HotRecommend')
         if (type !== 'ALL') {
             query.equalTo("type", "==", type)
         }
+        // 对createdAt字段降序排列
+        query.order("-createdAt")
         // 对readCount字段降序排列
-        query.order("-readCount")
+        if (isOrder || type === 'ALL') {
+            query.order("-readCount")
+        }
         query.limit(20)
         // query.skip(page * 10)
         query.find().then(res => {
@@ -249,10 +253,9 @@ export const cgp_recommend_query_list = function (type, page) {
     })
 }
 
-/*
-获取一行记录
-objectId 主键ID
-tableName 数据表名，默认为 CGP_HotRecommend
+/**
+ * @param {String} objectId 主键ID
+ * @param {String} tableName 数据表名，默认为 CGP_HotRecommend
 */
 export const cgp_recommend_getDetail_with_objectId = function (objectId, tableName) {
     return new Promise((resolve, reject) => {
@@ -332,15 +335,15 @@ export const recommend_detail_editRecord_with_objectId = function (objectId) {
 
 // 获取全部数据
 // page 请求的分页页码
-export const recommend_search_all_data = function(page) {
-	return new Promise((resolve, reject) => {
-		
-		const query = React.$bmob.Query('CGP_HotRecommend')
-		query.limit(100)
-		query.skip(page * 100)
-		query.find().then(res => {
-			resolve(res)
-		});
-		
-	})
+export const recommend_search_all_data = function (page) {
+    return new Promise((resolve, reject) => {
+
+        const query = React.$bmob.Query('CGP_HotRecommend')
+        query.limit(100)
+        query.skip(page * 100)
+        query.find().then(res => {
+            resolve(res)
+        });
+
+    })
 }

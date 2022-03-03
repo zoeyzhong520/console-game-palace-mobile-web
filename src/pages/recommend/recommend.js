@@ -10,7 +10,7 @@ import * as actionTypes from '../../store/actionTypes'
 const Recommend = (props) => {
     const navigator = useNavigate()
 
-    var page = 1 // 分页
+    var page = 0 // 分页
 
     const [recListType, setRecListType] = useState('ALL')
     useEffect(() => {
