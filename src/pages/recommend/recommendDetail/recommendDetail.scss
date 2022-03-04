@@ -20,6 +20,10 @@
         @include marginLeft20;
         font-size: $fontSizeContent;
         color: $textColor3;
+
+        p {
+            white-space: pre-wrap; // 保留空白符序列，但是正常地进行换行
+        }
     }
 
     &-gamePic {
@@ -28,6 +32,10 @@
 
     &-gameRequire {
         @include marginLeft20;
+
+        p {
+            white-space: pre-wrap; // 保留空白符序列，但是正常地进行换行
+        }
     }
 
     &-gameSrc {
