@@ -71,17 +71,17 @@ const Recommend = (props) => {
     // RecommendSwiper
     const RecommendSwiper = () => {
         // 点击Swiper的Item
-        const swiperItemClick = () => {
+        const swiperItemClick = (e, item) => {
             // props.dispatch({
             //     type: actionTypes.ADD_TABBARSHOWFLAG,
             //     tabBarShowFlag: false
             // })
-            navigator('/recommendDetail')
+            navigator('/recommendDetail', { state: { datas: item.objectId }, replace: false })
         }
 
         const items = banner.map((item, index) => (
             <Swiper.Item
-                onClick={() => swiperItemClick()}
+                onClick={(e) => swiperItemClick(e, item)}
                 key={index}>
                 <div
                     className='recommend-page-swiper-content'
@@ -105,11 +105,11 @@ const Recommend = (props) => {
             <List>
                 {recList.map((item, index) => (
                     <List.Item
-                        onClick={() => navigator('/recommendDetail')}
+                        onClick={() => navigator('/recommendDetail', { state: { datas: item.objectId }, replace: false })}
                         key={item.objectId}
                         arrow={false}
                         prefix={
-                            <Image className='recommend-page-list-prefix' src={item.image} width={100} height={140} fit='contain' lazy />
+                            <Image className='recommend-page-list-prefix' src={item.image} width={100} height={140} fit='cover' lazy />
                         }
                         title={
                             <p className='recommend-page-list-title'>{item.title}</p>

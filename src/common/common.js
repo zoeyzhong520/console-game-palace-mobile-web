@@ -257,9 +257,9 @@ export const cgp_recommend_query_list = function (type, page) {
  * @param {String} objectId 主键ID
  * @param {String} tableName 数据表名，默认为 CGP_HotRecommend
 */
-export const cgp_recommend_getDetail_with_objectId = function (objectId, tableName) {
+export const cgp_recommend_getDetail_with_objectId = function (objectId, tableName = 'CGP_HotRecommend') {
     return new Promise((resolve, reject) => {
-        const query = React.$bmob.Query(!!tableName ? tableName : 'CGP_HotRecommend')
+        const query = React.$bmob.Query(tableName)
         query.get(objectId).then(res => {
             // console.log(res)
             resolve(res)

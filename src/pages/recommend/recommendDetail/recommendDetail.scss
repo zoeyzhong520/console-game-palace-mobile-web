@@ -1,9 +1,38 @@
 @import '../../../assets/theme.scss';
 
 .recommend-detail-page {
-    width: 100vw;
-    
-    
+    &-navBar {
+        width: 100vw;
+    }
+
+    @mixin marginLeft20 {
+        margin: 0 20px;
+    }
+
+    &-title {
+        @include marginLeft20;
+        font-weight: 500;
+        font-size: $fontSizeTitle;
+        color: $textColor3;
+    }
+
+    &-gameDesc {
+        @include marginLeft20;
+        font-size: $fontSizeContent;
+        color: $textColor3;
+    }
+
+    &-gamePic {
+        @include marginLeft20;
+    }
+
+    &-gameRequire {
+        @include marginLeft20;
+    }
+
+    &-gameSrc {
+        @include marginLeft20;
+    }
 }
 
 .recommend-detail-page-section {
