@@ -76,7 +76,7 @@ const Recommend = (props) => {
             //     type: actionTypes.ADD_TABBARSHOWFLAG,
             //     tabBarShowFlag: false
             // })
-            navigator('/recommendDetail', { state: { datas: item.objectId }, replace: false })
+            navigator('/recommendDetail', { state: { datas: item.objectId, isBanner: true }, replace: false })
         }
 
         const items = banner.map((item, index) => (

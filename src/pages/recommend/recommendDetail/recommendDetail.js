@@ -8,12 +8,12 @@ import { useEffect, useState } from 'react'
 
 const RecommendDetail = (props) => {
     let location = useLocation()
-    let objectId = location.state
+    let params = location.state
 
     const [gameInfo, setGameInfo] = useState({})
     useEffect(() => {
         // Http请求
-        getGameInfo(objectId.datas)
+        getGameInfo(params.datas, params.isBanner)
     }, [])
 
     // 分组的组头
@@ -35,12 +35,12 @@ const RecommendDetail = (props) => {
     }
 
     // Http请求
-    const getGameInfo = (gameId) => {
+    const getGameInfo = (gameId, isBanner) => {
         Toast.show({
             icon: 'loading',
             content: '加载中...'
         })
-        cgp_recommend_getDetail_with_objectId(gameId, 'CGP_HotRecommend').then(info => {
+        cgp_recommend_getDetail_with_objectId(gameId, !isBanner ? 'CGP_HotRecommend' : 'CGP_Banner').then(info => {
             Toast.clear()
             setGameInfo(info)
         })
