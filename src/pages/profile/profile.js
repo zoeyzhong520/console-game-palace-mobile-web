@@ -1,58 +1,76 @@
 import './profile.scss'
-import { Grid, List } from 'antd-mobile'
+import { Grid, List, Space, Tag } from 'antd-mobile'
 import { UnorderedListOutline, PayCircleOutline, SetOutline } from 'antd-mobile-icons'
 import { useNavigate } from 'react-router-dom'
 
 const Profile = () => {
-    const navigator = useNavigate()
+    const navigate = useNavigate()
 
     // 点击Grid的Item
-    const gridClick = (e) => {
-        navigator('/profileRank')
+    const gridClick = (e, item) => {
+        navigate('/profileRank', { state: { datas: item } })
     }
 
     // ProfileGrid
     const ProfileGrid = () => {
+        const tabsList = [
+            {
+                name: "角色扮演",
+                type: 'C'
+            },
+            {
+                name: "即时战略",
+                type: 'I'
+            },
+            {
+                name: "体育竞技",
+                type: 'Q'
+            },
+            {
+                name: "模拟经营",
+                type: 'H'
+            },
+            {
+                name: "休闲益智",
+                type: 'L'
+            },
+            {
+                name: "射击游戏",
+                type: 'B'
+            },
+            {
+                name: "动作游戏",
+                type: 'A'
+            },
+            {
+                name: "策略战棋",
+                type: 'N'
+            },
+            {
+                name: "赛车竞技",
+                type: 'G'
+            },
+            {
+                name: "动作冒险",
+                type: 'D'
+            }]
         return (
-            <Grid columns={2} gap={10}>
-                <Grid.Item onClick={() => gridClick(1)}>
-                    <div className="profile-page-grid-item">角色扮演</div>
-                </Grid.Item>
-                <Grid.Item onClick={() => gridClick(2)}>
-                    <div className="profile-page-grid-item">角色扮演</div>
-                </Grid.Item>
-                <Grid.Item onClick={() => gridClick(3)}>
-                    <div className="profile-page-grid-item">角色扮演</div>
-                </Grid.Item>
-                <Grid.Item onClick={() => gridClick(4)}>
-                    <div className="profile-page-grid-item">角色扮演</div>
-                </Grid.Item>
-                <Grid.Item onClick={() => gridClick(5)}>
-                    <div className="profile-page-grid-item">角色扮演</div>
-                </Grid.Item>
-                <Grid.Item onClick={() => gridClick(6)}>
-                    <div className="profile-page-grid-item">角色扮演</div>
-                </Grid.Item>
-                <Grid.Item onClick={() => gridClick(7)}>
-                    <div className="profile-page-grid-item">角色扮演</div>
-                </Grid.Item>
-                <Grid.Item onClick={() => gridClick(8)}>
-                    <div className="profile-page-grid-item">角色扮演</div>
-                </Grid.Item>
-                <Grid.Item onClick={() => gridClick(9)}>
-                    <div className="profile-page-grid-item">角色扮演</div>
-                </Grid.Item>
-                <Grid.Item onClick={() => gridClick(10)}>
-                    <div className="profile-page-grid-item">角色扮演</div>
-                </Grid.Item>
-            </Grid>
+            <div>
+                {tabsList.map((item, index) => {
+                    return <Tag
+                        onClick={(e) => gridClick(e, item)}
+                        className='profile-page-grid-item'
+                        color='#f5f6f7' 
+                        key={index}>{item.name}</Tag>
+                })}
+            </div>
         )
     }
 
     // ProfileList
     const ProfileList = () => {
         return (
-            <List header=''>
+            <List style={{ '--border-top': 0, '--border-bottom': 0 }}>
                 <List.Item prefix={<UnorderedListOutline />} onClick={() => navigator('/profileClub')}>
                     加入俱乐部
                 </List.Item>

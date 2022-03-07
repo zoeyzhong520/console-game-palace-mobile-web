@@ -1,11 +1,19 @@
 import './profileRank.scss'
 import { NavBar, List, Image } from 'antd-mobile'
 import { connect } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import * as actionTypes from '../../../store/actionTypes'
+import { useEffect, useState } from 'react'
 
 const ProfileRank = (props) => {
     const navigator = useNavigate()
+    let location = useLocation()
+    let params = location.state
+
+    const [tabItem, setTabItem] = useState({})
+    useEffect(() => {
+        console.log(JSON.stringify(params.datas));
+    }, [])
 
     const users = [
         {
